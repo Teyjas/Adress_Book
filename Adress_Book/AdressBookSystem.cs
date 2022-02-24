@@ -26,6 +26,11 @@ internal class AddressBook
         contacts.Add(new Contact());
     }
 
+    // Add Contact to AddressBook
+    public void AddContact(Contact contact)
+    {
+        contacts.Add(contact);
+    }
     public void Display()
     {
         foreach (Contact contact in contacts)
