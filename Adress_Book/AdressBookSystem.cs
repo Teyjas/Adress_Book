@@ -10,7 +10,7 @@ namespace AddressBookSystem;
 /// <summary>
 /// This Class handles all contacts in an address book
 /// </summary>
-internal class AddressBook
+public class AddressBook
 {
     // Dictionary for storing contacts with unique name
     public readonly Dictionary<string, Contact> addresses;
@@ -127,67 +127,57 @@ internal class AddressBook
     }
 
     /// <summary>
-    /// Filter results based on location
+    /// Display filtered results based on location
     /// </summary>
     public void DisplayFilteredList()
     {
+        List<Contact> filteredList = LocationFilter();
+        foreach (Contact contact in filteredList)
+            contact.Display();
+    }
+
+    /// <summary>
+    /// filter by Location
+    /// </summary>
+    /// <returns>A list of contacts</returns>
+    public List<Contact> LocationFilter()
+    {
         int option = 0;
-        List<Contact> filterredList = new List<Contact>();
-        Console.WriteLine("Filter Contact list in this AddressBook:");
+        MatchLocation Match;
+        List<Contact> filteredList = new List<Contact>();
+        Console.WriteLine("Filter Contact list in full library of AddressBooks:");
         Console.WriteLine("1. Filter by state");
         Console.WriteLine("2. Filter by city");
         Console.Write("Option: ");
-        do
-        {
-            try
-            {
-                option = int.Parse(Console.ReadLine());
-            }
-            catch
-            {
+        while (option != 1 && option != 2)
+            while (int.TryParse(Console.ReadLine(), out option) is false)
                 Console.WriteLine("Input must be Integer only");
-            }
-        } while (option != 1 && option != 2);
-        switch (option)
+        if (option == 1)
         {
-            case 1:
-                Console.Write("Enter state: ");
-                string state = Console.ReadLine();
-                Console.WriteLine($"List of contacts in {state}");
-                StateFilter(state, filterredList);
-                break;
-            case 2:
-                Console.WriteLine("Enter City: ");
-                string city = Console.ReadLine();
-                Console.WriteLine($"List of contacts in {city}");
-                CityFilter(city, filterredList);
-                break;
-            default:
-                Console.WriteLine("Error!!!");
-                break;
+            Match = new MatchLocation((contact, state) => { return contact.State == state; });
+            Console.Write("Enter state: ");
         }
+        else
+        {
+            Match = new MatchLocation((contact, city) => { return contact.City == city; });
+            Console.WriteLine("Enter City: ");
+        }
+        string location = Console.ReadLine();
+        FilterList(location, filteredList, Match);
+        return filteredList;
     }
 
     /// <summary>
-    /// Filter results by city
+    /// Filters the list.
     /// </summary>
-    public void CityFilter(string city, List<Contact> filteredList)
+    /// <param name="location">The location.</param>
+    /// <param name="filterList">The filter list.</param>
+    /// <param name="Match">The match delegate</param>
+    public void FilterList(string location, List<Contact> filterList, MatchLocation Match)
     {
-        Dictionary<string, Contact>.Enumerator enumerator = addresses.GetEnumerator();
-        while (enumerator.MoveNext())
-            if (enumerator.Current.Value.City == city)
-                filteredList.Add(enumerator.Current.Value);
-    }
-
-    /// <summary>
-    /// Filter results by state
-    /// </summary>
-    public void StateFilter(string state, List<Contact> filteredList)
-    {
-        Dictionary<string, Contact>.Enumerator enumerator = addresses.GetEnumerator();
-        while (enumerator.MoveNext())
-            if (enumerator.Current.Value.State == state)
-                filteredList.Add(enumerator.Current.Value);
+        foreach (Contact contact in addresses.Values)
+            if (Match(contact, location))
+                filterList.Add(contact);
     }
 
     /// <summary>
@@ -195,39 +185,29 @@ internal class AddressBook
     /// </summary>
     public void DisplayCountByLocation()
     {
-        var cityWiseCount = GetCityWiseCount();
-        var stateWiseCount = GetStateWiseCount();
-
+        Console.WriteLine("Count of contacts at the library level:");
+        var cityWiseCount = GetLocationCount(contact => { return contact.City; }, DelegatesList.CityMatch);
+        var stateWiseCount = GetLocationCount(contact => { return contact.State; }, DelegatesList.StateMatch);
         Console.WriteLine("\nCity wise count: ");
         foreach (var city in cityWiseCount)
             Console.WriteLine($"City: {city.Key}, No of contacts: {city.Value}");
-
         Console.WriteLine("\nState wise count: ");
         foreach (var state in stateWiseCount)
             Console.WriteLine($"State: {state.Key}, No of contacts: {state.Value}");
     }
 
     /// <summary>
-    /// Gets the city wise count of contacts.
+    /// Gets the location count.
     /// </summary>
-    public Dictionary<string, int> GetCityWiseCount()
+    /// <param name="Selector">The selector.</param>
+    /// <param name="Match">The match.</param>
+    /// <returns>returns location wise count as dictionary</returns>
+    public Dictionary<string, int> GetLocationCount(GetLocation Selector, MatchLocation Match)
     {
-        Dictionary<string, int> counts = new Dictionary<string, int>();
-        var cityList = addresses.Values.Select(x => { return x.City; }).Distinct().ToList();
-        foreach (var city in cityList)
-            counts.Add(city, addresses.Values.Count(contact => contact.City == city));
-        return counts;
-    }
-
-    /// <summary>
-    /// Gets the state wise count of contacts.
-    /// </summary>
-    public Dictionary<string, int> GetStateWiseCount()
-    {
-        Dictionary<string, int> counts = new Dictionary<string, int>();
-        var stateList = addresses.Values.Select(x => { return x.State; }).Distinct().ToList();
-        foreach (var state in stateList)
-            counts.Add(state, addresses.Values.Count(contact => contact.State == state));
+        Dictionary<string, int> counts = new();
+        var locationList = addresses.Values.Select(x => Selector(x)).Distinct().ToList();
+        foreach (var location in locationList)
+            counts.Add(location, addresses.Values.Count(contact => Match(contact, location)));
         return counts;
     }
 }

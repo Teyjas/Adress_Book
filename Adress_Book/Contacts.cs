@@ -3,7 +3,7 @@
 /// <summary>
 /// This class handles each individual contact
 /// </summary>
-internal class Contact
+public class Contact
 {
     // Declared attributes required for a person's contact
     private string firstName = "";
@@ -16,7 +16,7 @@ internal class Contact
     private string address = "";
 
     // Properties
-    public string FullName
+    public string? FullName
     {
         get
         {
@@ -80,12 +80,22 @@ internal class Contact
     /// <returns>
     ///   <c>true</c> if the specified object is equal to this contact object; otherwise, <c>false</c>.
     /// </returns>
-    public override bool Equals(object obj)
+    public override bool Equals(object? obj)
     {
         if (obj is not Contact)
             return false;
         else if (FullName == ((Contact)obj).FullName)
             return true;
         return false;
+    }
+
+    /// <summary>
+    /// Returns a hash code for this instance.
+    /// </summary>
+    public override int GetHashCode()
+    {
+        if (FullName == null)
+            return "".GetHashCode();
+        return FullName.GetHashCode();
     }
 }

@@ -22,7 +22,7 @@ internal class LibraryMenu
             Console.WriteLine("3. Display all Address Books in library");
             Console.WriteLine("4. Filter contact list by city/state");
             Console.WriteLine("5. Search and filter by location");
-            Console.WriteLine("6. Get City wise count");
+            Console.WriteLine("6. Get location wise count of contacts");
             Console.WriteLine("7. Exit");
             option = UserInput.GetPositiveInt("Enter option(1-7): ");
             Console.Clear();
