@@ -25,8 +25,9 @@ internal static class AddressBookMenu
             Console.WriteLine("5. Look up a contact");
             Console.WriteLine("6. Display Address Book");
             Console.WriteLine("7. Filter contact list by city/state");
-            Console.WriteLine("8. Exit to library");
-            option = UserInput.GetPositiveInt("Enter option(1-8): ");
+            Console.WriteLine("8. Display no of contacts by location");
+            Console.WriteLine("9. Exit to library");
+            option = UserInput.GetPositiveInt("Enter option(1-9): ");
             Console.Clear();
             switch (option)
             {
@@ -54,16 +55,19 @@ internal static class AddressBookMenu
                     addressBook.DisplayFilteredList();
                     break;
                 case 8:
+                    addressBook.DisplayCountByLocation();
+                    break;
+                case 9:
                     Console.WriteLine("Exiting to library...");
                     break;
                 default:
                     Console.WriteLine("Invalid Option!!!");
                     break;
             }
-            if (option == 8)
+            if (option == 9)
                 break;
             Console.WriteLine("Press any key to Continue...");
             Console.ReadKey();
-        } while (option != 8);
+        } while (option != 9);
     }
 }

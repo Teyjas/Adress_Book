@@ -22,6 +22,8 @@ internal class Contact
         {
             if (String.IsNullOrEmpty(lastName) is true && String.IsNullOrEmpty(firstName) is true)
                 return null;
+            if (String.IsNullOrEmpty(firstName) is true)
+                return lastName;
             if (String.IsNullOrEmpty(lastName) is true)
                 return firstName;
             return firstName + " " + lastName;

@@ -22,8 +22,9 @@ internal class LibraryMenu
             Console.WriteLine("3. Display all Address Books in library");
             Console.WriteLine("4. Filter contact list by city/state");
             Console.WriteLine("5. Search and filter by location");
-            Console.WriteLine("6. Exit");
-            option = UserInput.GetPositiveInt("Enter option(1-6): ");
+            Console.WriteLine("6. Get City wise count");
+            Console.WriteLine("7. Exit");
+            option = UserInput.GetPositiveInt("Enter option(1-7): ");
             Console.Clear();
             switch (option)
             {
@@ -43,16 +44,19 @@ internal class LibraryMenu
                     mylibrary.SearchAndFilter();
                     break;
                 case 6:
+                    mylibrary.DisplayCountByLocation();
+                    break;
+                case 7:
                     Console.WriteLine("Exiting Application...");
                     break;
                 default:
                     Console.WriteLine("Invalid Option!!!");
                     break;
             }
-            if (option == 6)
+            if (option == 7)
                 break;
             Console.WriteLine("Press any key to Continue...");
             Console.ReadKey();
-        } while (option != 6);
+        } while (option != 7);
     }
 }

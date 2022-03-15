@@ -142,4 +142,54 @@ internal class AddressBookLibrary
         foreach (Contact contact in searchResults)
             contact.Display();
     }
+
+    /// <summary>
+    /// Displays the count of contacts by location.
+    /// </summary>
+    public void DisplayCountByLocation()
+    {
+        Console.WriteLine("Count of contacts at the library level:");
+        var cityWiseCount = GetCityWiseCount();
+        var stateWiseCount = GetStateWiseCount();
+
+        Console.WriteLine("\nCity wise count: ");
+        foreach (var city in cityWiseCount)
+            Console.WriteLine($"City: {city.Key}, No of contacts: {city.Value}");
+
+        Console.WriteLine("\nState wise count: ");
+        foreach (var state in stateWiseCount)
+            Console.WriteLine($"State: {state.Key}, No of contacts: {state.Value}");
+    }
+
+    /// <summary>
+    /// Gets the city wise count of contacts.
+    /// </summary>
+    public Dictionary<string, int> GetCityWiseCount()
+    {
+        Dictionary<string, int> cityCounts = new Dictionary<string, int>();
+        var cityWiseCountCollection = library.Values.Select(x => x.GetCityWiseCount()).ToList();
+        foreach (var cityWiseCount in cityWiseCountCollection)
+            foreach (var city in cityWiseCount)
+                if (cityCounts.ContainsKey(city.Key))
+                    cityCounts[city.Key] += city.Value;
+                else
+                    cityCounts.Add(city.Key, city.Value);
+        return cityCounts;
+    }
+
+    /// <summary>
+    /// Gets the state wise count of contacts.
+    /// </summary>
+    public Dictionary<string, int> GetStateWiseCount()
+    {
+        Dictionary<string, int> stateCounts = new Dictionary<string, int>();
+        var stateWiseCountCollection = library.Values.Select(x => x.GetStateWiseCount()).ToList();
+        foreach (var stateWiseCount in stateWiseCountCollection)
+            foreach (var state in stateWiseCount)
+                if (stateCounts.ContainsKey(state.Key))
+                    stateCounts[state.Key] += state.Value;
+                else
+                    stateCounts.Add(state.Key, state.Value);
+        return stateCounts;
+    }
 }
