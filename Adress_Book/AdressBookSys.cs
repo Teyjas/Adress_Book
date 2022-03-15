@@ -1,17 +1,23 @@
 ﻿namespace AddressBookSystem;
 
-// This class keeps collection of Address books
+/// <summary>
+/// This class keeps collection of Address books
+/// </summary>
 internal class AddressBookLibrary
 {
     private readonly Dictionary<string, AddressBook> library;
 
-    // Default Constructor
+    /// <summary>
+    /// Initializes a new instance of the <see cref="AddressBookLibrary"/> class.
+    /// </summary>
     public AddressBookLibrary()
     {
         library = new Dictionary<string, AddressBook>();
     }
 
-    // Adds new AddressBook to library
+    /// <summary>
+    /// Adds an address book to the library.
+    /// </summary>
     public void AddAddressBook()
     {
         string name = UserInput.GetName("Enter Name of AddressBook: ");
@@ -26,7 +32,9 @@ internal class AddressBookLibrary
             Console.WriteLine("AddressBook with that name already exists");
     }
 
-    // Opens an existing AddressBook with menu option to interact with it
+    /// <summary>
+    /// Opens an existing AddressBook with menu option to interact with it
+    /// </summary>
     public void OpenAddressBook()
     {
         string name = UserInput.GetName("Enter Name of AddressBook: ");
@@ -36,7 +44,9 @@ internal class AddressBookLibrary
             Console.WriteLine("Addressbook with that name does not exist");
     }
 
-    // Display all Address Books in the library
+    /// <summary>
+    /// Display all Address Books in the library
+    /// </summary>
     public void Display()
     {
         Console.WriteLine("List of Address Books:");
