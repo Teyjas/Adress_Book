@@ -2,10 +2,16 @@
 
 namespace AddressBookSystem;
 
-// This class is used for input checks when entering contact info
+/// <summary>
+/// This class is used for input checks when entering contact info
+/// </summary>
 internal static class UserInput
 {
-    // To avoid null reference assignment warning
+    /// <summary>
+    /// Reads the string.
+    /// <para>To avoid null reference assignment warning</para>
+    /// </summary>
+    /// <returns></returns>
     public static string ReadString()
     {
         string input = Console.ReadLine();
@@ -14,7 +20,12 @@ internal static class UserInput
         return input;
     }
 
-    // Ensures the input is non-null string
+    /// <summary>
+    /// Gets a name.
+    /// <para>Ensures the input is non-null string</para>
+    /// </summary>
+    /// <param name="message">The message to display to user.</param>
+    /// <returns>The name entered by user</returns>
     public static string GetName(string message)
     {
         string input;
@@ -26,7 +37,12 @@ internal static class UserInput
         return input;
     }
 
-    // Ensures the input matches phone patterns
+    /// <summary>
+    /// Gets a number.
+    /// <para>Ensures the input matches phone patterns</para>
+    /// </summary>
+    /// <param name="message">The message to display to user.</param>
+    /// <returns>The number entered by user</returns>
     public static string GetNumber(string message)
     {
         string input;
@@ -38,7 +54,12 @@ internal static class UserInput
         return input;
     }
 
-    // Ensures the input matches zipcode patterns
+    /// <summary>
+    /// Gets the zip.
+    /// <para>Ensures the input matches zipcode patterns</para>
+    /// </summary>
+    /// <param name="message">The message.</param>
+    /// <returns>The zip code entered by user</returns>
     public static string GetZip(string message)
     {
         string input;
@@ -50,7 +71,12 @@ internal static class UserInput
         return input;
     }
 
-    // Ensures user input is positve integer
+    /// <summary>
+    /// Gets the positive int.
+    /// <para>Ensures user input is positve integer</para>
+    /// </summary>
+    /// <param name="message">The message.</param>
+    /// <returns>An integer >= 0</returns>
     public static int GetPositiveInt(string message)
     {
         int n;
@@ -68,7 +94,12 @@ internal static class UserInput
         return n;
     }
 
-    // Checks if input matches phone pattern
+    /// <summary>
+    /// Phones the check.
+    /// <para>Checks if input matches phone pattern</para>
+    /// </summary>
+    /// <param name="input">The input.</param>
+    /// <returns>true if a match. Else false</returns>
     public static bool PhoneCheck(string input)
     {
         string phonePattern = @"(^[0-9]{10}$)|(^\+{1}[0-9]{2}[0-9]{10}$)|(^[0-9]{3}[-]{0,1}[0-9]{8}$)";
@@ -79,7 +110,12 @@ internal static class UserInput
         return false;
     }
 
-    // Checks if input matches zip pattern
+    /// <summary>
+    /// Zips the check.
+    /// <para>Checks if input matches zip pattern</para>
+    /// </summary>
+    /// <param name="input">The input.</param>
+    /// <returns>true if a match. Else false</returns>
     public static bool ZipCheck(string input)
     {
         string zipPattern = @"(^[0-9]{6}$)";

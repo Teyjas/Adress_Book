@@ -3,6 +3,6 @@ using AddressBookSystem;
 
 Console.Title = "AddressBook System";
 
-Menu.List();
+LibraryMenu.List();
 
 Console.ReadKey();
