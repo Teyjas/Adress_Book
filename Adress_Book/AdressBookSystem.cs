@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-
-namespace AddressBookSystem;
+﻿namespace AddressBookSystem;
 
 /// <summary>
 /// This Class handles all contacts in an address book
@@ -209,5 +202,16 @@ public class AddressBook
         foreach (var location in locationList)
             counts.Add(location, addresses.Values.Count(contact => Match(contact, location)));
         return counts;
+    }
+
+    /// <summary>
+    /// Sorts the Contacts by name.
+    /// </summary>
+    public void SortByName()
+    {
+        Console.WriteLine("Sorting by Name:");
+        var sorted = addresses.OrderBy(x => x.Key);
+        foreach (var contact in sorted)
+            Console.WriteLine("\n" + contact.Value);
     }
 }
