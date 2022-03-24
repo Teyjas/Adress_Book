@@ -31,6 +31,7 @@ public class Contact
     }
     public string City { get { return city; } }
     public string State { get { return state; } }
+    public string Zip { get { return zip; } }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="Contact"/> class.
@@ -97,5 +98,20 @@ public class Contact
         if (FullName == null)
             return "".GetHashCode();
         return FullName.GetHashCode();
+    }
+
+
+    public override string ToString()
+    {
+        string details;
+        details = $"First Name: {firstName}\n";
+        details += $"Last Name: {lastName}\n";
+        details += $"Phone: {phone}\n";
+        details += $"Email: {email}\n";
+        details += $"City: {city}\n";
+        details += $"State: {state}\n";
+        details += $"Zip: {zip}\n";
+        details += $"Address: {address}\n";
+        return details;
     }
 }
