@@ -205,12 +205,54 @@ public class AddressBook
     }
 
     /// <summary>
-    /// Sorts the Contacts by name.
+    /// Menu option for sorting the contact list
     /// </summary>
-    public void SortByName()
+    public void SortOptions()
     {
-        Console.WriteLine("Sorting by Name:");
-        var sorted = addresses.OrderBy(x => x.Key);
+        int option = 0;
+        Console.WriteLine("Sorting Options:");
+        Console.WriteLine("1. Sort by Name");
+        Console.WriteLine("2. Sort by City");
+        Console.WriteLine("3. Sort by State");
+        Console.WriteLine("4. Sort by Zip");
+        Console.Write("Option: ");
+        if (int.TryParse(Console.ReadLine(), out option))
+        {
+            switch (option)
+            {
+                case 1:
+                    Console.WriteLine("Sorting by Name\n");
+                    Sort(x => x.Value.FullName);
+                    break;
+                case 2:
+                    Console.WriteLine("Sorting by City\n");
+                    Sort(x => x.Value.City);
+                    break;
+                case 3:
+                    Console.WriteLine("Sorting by State\n");
+                    Sort(x => x.Value.State);
+                    break;
+                case 4:
+                    Console.WriteLine("Sorting by Zip\n");
+                    Sort(x => x.Value.Zip);
+                    break;
+                default:
+                    Console.WriteLine("Option must be in (1-4)!!!");
+                    break;
+            }
+        }
+        else
+            Console.WriteLine("Invalid option!");
+    }
+
+    /// <summary>
+    /// Sorts the contact list using the specified sort condition.
+    /// </summary>
+    /// <param name="sortCondition">The sort condition.</param>
+    private void Sort(Func<KeyValuePair<string, Contact>, string> sortCondition)
+    {
+        Console.WriteLine("Sorted List:");
+        var sorted = addresses.OrderBy(sortCondition);
         foreach (var contact in sorted)
             Console.WriteLine("\n" + contact.Value);
     }
